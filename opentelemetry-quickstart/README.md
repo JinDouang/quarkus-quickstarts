@@ -1,7 +1,7 @@
 Quarkus guide: https://quarkus.io/guides/opentelemetry
 
-/etc/hosts :
+must add in /etc/hosts (vm/windows etc...) :
 
-[ip] localdev jaeger
+[ip] localdev otel
 
-test request : `curl http://localhost:8080/hello`
+test request : `curl http://localhost:8080/hello` or `curl http://localdev:8080/hello`

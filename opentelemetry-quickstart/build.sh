@@ -5,13 +5,13 @@ PORT=8080
 
 
 startLogs() {
- docker-compose up -d jaeger
-# docker-compose up -d otel-collector
+ docker-compose up -d jaeger-all-in-one
+ docker-compose up -d otel-collector
 }
 
 stopLogs() {
-  docker-compose stop jaeger
-#  docker-compose stop otel-collector
+  docker-compose stop jaeger-all-in-one
+  docker-compose stop otel-collector
 }
 
 runDev() {
