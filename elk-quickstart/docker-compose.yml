@@ -1,11 +1,16 @@
-version: '2'
+version: '3.3'
 
 services:
   maven:
     image: maven:3.8-openjdk-18
     working_dir: /home/maven/project
+    networks:
+      - elk
     volumes:
       - ./:/home/maven/project
+    extra_hosts:
+      - "logstash:172.21.0.1"
+
   elasticsearch:
     container_name: elasticsearch
     image: docker.io/elastic/elasticsearch:7.16.3
@@ -21,12 +26,10 @@ services:
     container_name: logstash
     image: docker.io/elastic/logstash:7.16.3
     volumes:
-      - "./pipelines:/usr/share/logstash/pipeline"
-#      - "source: ./pipelines
-#        target: /usr/share/logstash/pipeline
-#        type: bind"
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./logstash/pipelines:/usr/share/logstash/pipeline:ro,Z
     ports:
-      - "12201:12201/udp"
+      - "127.0.0.1:12201:12201/udp"
       - "5000:5000"
       - "9600:9600"
     networks:
